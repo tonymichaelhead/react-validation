@@ -77,13 +77,18 @@ export default function form (WrappedComponent) {
 
    _unregister = (component, id) => {
     this.setState(function (prevState) {
-      var n = [].concat(i(prevState.byName[component.props.name]));
-      n.splice(n.indexOf(id), 1);
-      var a = n.length ? Object.assign({}, prevState.byName, o({}, component.props.name, n)) : omit()(prevState.byName, component.props.name);
+      const byComponentName = [...this.state.byName[component.props.name]];
+      
+      byComponentName.splice(byComponentName.indexOf(id), 1);
+      
+      const byName = byComponentName.length ? {
+        ...this.state.byName,
+        ...{ [component.props.name]: byComponentName }
+      } : omit(this.state.byName, component.props.name);
 
       return {
-        byName: a,
-        byId: omit()(prevState.byId, id)
+        byName,
+        byId: omit(this.state.byId, id)
       };
     });
   };
