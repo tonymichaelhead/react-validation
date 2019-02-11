@@ -59,22 +59,35 @@ export default function form (WrappedComponent) {
       }), this._setErrors);
     };
 
-    _unregister = (component, id) => {
-      const byComponentName = [...this.state.byName[component.props.name]];
+//     _unregister = (component, id) => {
+//       const byComponentName = [...this.state.byName[component.props.name]];
 
-      byComponentName.splice(byComponentName.indexOf(id), 1);
+//       byComponentName.splice(byComponentName.indexOf(id), 1);
 
-      const byName = byComponentName.length ? {
-        ...this.state.byName,
-        ...{ [component.props.name]: byComponentName }
-      } : omit(this.state.byName, component.props.name);
+//       const byName = byComponentName.length ? {
+//         ...this.state.byName,
+//         ...{ [component.props.name]: byComponentName }
+//       } : omit(this.state.byName, component.props.name);
 
-      this.setState({
-        byName,
-        byId: omit(this.state.byId, id)
-      });
-    };
+//       this.setState({
+//         byName,
+//         byId: omit(this.state.byId, id)
+//       });
+//     };
 
+   _unregister = (component, id) => {
+    this.setState(function (prevState) {
+      var n = [].concat(i(prevState.byName[component.props.name]));
+      n.splice(n.indexOf(id), 1);
+      var a = n.length ? Object.assign({}, prevState.byName, o({}, component.props.name, n)) : omit()(prevState.byName, component.props.name);
+
+      return {
+        byName: a,
+        byId: omit()(prevState.byId, id)
+      };
+    });
+  };
+  
     _getProps = (id) => {
       if (this.state.byId[id]) {
         const { validations, isCheckable, ...props } = this.state.byId[id];
