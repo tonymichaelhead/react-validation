@@ -59,39 +59,39 @@ export default function form (WrappedComponent) {
       }), this._setErrors);
     };
 
-//     _unregister = (component, id) => {
-//       const byComponentName = [...this.state.byName[component.props.name]];
-
-//       byComponentName.splice(byComponentName.indexOf(id), 1);
-
-//       const byName = byComponentName.length ? {
-//         ...this.state.byName,
-//         ...{ [component.props.name]: byComponentName }
-//       } : omit(this.state.byName, component.props.name);
-
-//       this.setState({
-//         byName,
-//         byId: omit(this.state.byId, id)
-//       });
-//     };
-
-   _unregister = (component, id) => {
-    this.setState(function (prevState) {
+    _unregister = (component, id) => {
       const byComponentName = [...this.state.byName[component.props.name]];
-      
+
       byComponentName.splice(byComponentName.indexOf(id), 1);
-      
+
       const byName = byComponentName.length ? {
         ...this.state.byName,
         ...{ [component.props.name]: byComponentName }
       } : omit(this.state.byName, component.props.name);
 
-      return {
+      this.setState({
         byName,
         byId: omit(this.state.byId, id)
-      };
-    });
-  };
+      });
+    };
+
+//    _unregister = (component, id) => {
+//     this.setState(function (prevState) {
+//       const byComponentName = [...this.prevState.byName[component.props.name]];
+      
+//       byComponentName.splice(byComponentName.indexOf(id), 1);
+      
+//       const byName = byComponentName.length ? {
+//         ...this.prevState.byName,
+//         ...{ [component.props.name]: byComponentName }
+//       } : omit(this.prevState.byName, component.props.name);
+
+//       return {
+//         byName,
+//         byId: omit(this.prevState.byId, id)
+//       };
+//     });
+//   };
   
     _getProps = (id) => {
       if (this.state.byId[id]) {
